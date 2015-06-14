@@ -16,7 +16,7 @@
 			        <div class="row-content">
 			            <div class="action-secondary"><i class="mdi-material-info"></i></div>
 			            <h4 class="list-group-item-heading">{{$emp->name}}</h4>
-			            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus.</p>
+			            <p class="list-group-item-text">{{$emp->rsocial}}</p>
 			        </div>
 			    </div>
 			    <div class="list-group-separator"></div>

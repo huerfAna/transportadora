@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="csrf_token" content="{{ csrf_token() }}" />
+    <meta name="_token" content="{!! csrf_token() !!}"/>
 
     <title>Dashboard Transportadora</title>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -206,26 +206,33 @@
 </head>
 <body>
   <nav class="navbar navbar-material navbar-fixed-top">
-  <div class="up-navbar"></div>
+    <!--<div class="up-navbar"></div>-->
     <div class="container-fluid">
-      <div class="navbar-header">
+        <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Transportadora CL</a>
+          <a class="navbar-brand" href="home">{{ Session::get('name_emp') }}</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url('/home') }}">Dashboard</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li><a href="#"  role="button" aria-expanded="false">{{ Auth::user()->name }}</a></li>                          
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Empresas<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                @foreach($empresas as $emp)
+                <li><a href="{{ route('empresa.show',$emp) }}">{{ $emp->name }}</a></li>
+                @endforeach
+              </ul>
+            </li>
             <li><a href="{{ url('/auth/logout') }}">Salir</a></li>
-          </ul>
+          </ul>         
         </div>
-      </div>
-    </nav>
+    </div>
+  </nav>
 
     <div class="container-fluid">
       <div class="row">
@@ -245,28 +252,35 @@
               <li><a href="{{ url('/directorio') }}">Directorio</a></li>
               <li><a href="#">Cotizaciones</a></li>
               <li><a href="{{ route('remision.index') }}">Remisiones</a></li>
-              <li><a href="#">Contrarecibos</a></li>
+              <li><a href="{{ route('contrarecibo.index') }}">Contrarecibos</a></li>
             </ul>
             <li><i class="mdi-action-settings"></i>Mantenimiento</li>
             <ul class="submenu">
-              <li><a href="#">Rutas</a></li>
+              <li><a href="{{ route('ruta.index') }}">Rutas</a></li>
               <li><a href="{{ route('unidad.index') }}">Unidades</a></li>
               <li><a href="{{ route('remolque.index') }}">Remolques</a></li>
             </ul>
             <li><i class="mdi-av-equalizer"></i>Graficas</li>
           </ul>
         </div>
+      </div>
+    </div>
 
         @yield('content')
   
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script src="{{ asset('js/material.min.js') }}"></script>
-  <script src="{{ asset('js/ripples.min.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/material.min.js') }}"></script>
+    <script src="{{ asset('js/ripples.min.js') }}"></script>
     <script>
       $.material.init();
     </script>
 @yield('scripts')
 </body>
+<script type="text/javascript">
+$.ajaxSetup({
+   headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+});
+</script>
 </html>

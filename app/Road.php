@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
    * Modelo Remolque
    ******************
  **/
-class Tow extends Model  {
+class Road extends Model  {
 
 	
 	/**
@@ -15,7 +15,7 @@ class Tow extends Model  {
 	 *
 	 * @var string
 	 */
-	protected $table = 'tows';
+	protected $table = 'roads';
 	public $timestamps = false;
 
 	/**
@@ -29,8 +29,6 @@ class Tow extends Model  {
 	public function scopeSearch($query, $name)
 	{
 		if(trim($name) != '')
-			$query->where("name","like","%$name%")->orwhere("plates","like","%$name%");
+			$query->where("origin","like","%$name%")->orwhere("destination","like","%$name%");
 	}
-
-
 }

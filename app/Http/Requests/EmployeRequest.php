@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use Illuminate\Routing\Route;
 
 class EmployeRequest extends Request {
@@ -43,7 +44,7 @@ class EmployeRequest extends Request {
 			'salary'     => 'required|numeric',
 			'imss'       => 'unique:employees,imss,'.$this->route->getParameter('empleado'),
 			'license'	    => 'required_if:type,2|max:25',	
-			'data_validate' => 'required_if:type,2|date',
+			'date_validate' => 'required_if:type,2|date',
 			'unit' 			=> 'required_if:type,2|unique:drivers,unit,'.$this->route->getParameter('empleado')	
 		];
 	}

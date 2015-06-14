@@ -32,7 +32,7 @@ class UnitRequest extends Request {
 		//dd($this->);
 		return [
 			'unit_number'  => 'required|unique:units,unit_number,'.$this->route->getParameter('unidad'),
-			'plates'       => 'required|max:20||unique:units,plates',
+			'plates'       => 'required|max:20||unique:units,plates,'.$this->route->getParameter('unidad'),
 			'name'  	   => 'required|max:100',
 			'description'  => 'required',
 			'trademark'	   => 'max:100',

@@ -3,7 +3,7 @@
 use App\Http\Requests\Request;
 use Illuminate\Routing\Route;
 
-class CustomerRequest extends Request {
+class RoadRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -31,15 +31,8 @@ class CustomerRequest extends Request {
 	{
 		//dd($this->);
 		return [
-			'rfc' 		 => 'required|unique:customers,rfc,'.$this->route->getParameter('cliente'),	
-			'rsocial'    => 'required',
-			'address'  	 => 'required|max:250',
-			'number'     => 'max:4',
-			'colony'	 => 'max:250',
-			'pcode'      => 'numeric',
-			'email'		 => 'email',
-			'account'    => 'max:4',
-			'credit'     => 'numeric'			
+			'origin'        => 'required',
+			'destination'  	=> 'required',
 		];
 	}
 

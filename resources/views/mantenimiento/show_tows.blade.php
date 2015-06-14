@@ -8,7 +8,6 @@
 		{!! Form::model(Request::all(),['route' => 'remolque.index','method'=>'GET','class'=>'navbar-form navbar-left','role'=>'search']) !!}
 		   @include('administracion.partials.search')
 		{!! Form::close() !!}	
-		<a href="{{ url('remolque/exportar') }}">Exportar</a>	
 		<table class="table table-striped ">
 		 	<thead>
 				<tr>

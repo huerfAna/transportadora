@@ -59,6 +59,6 @@
 	</div>
 	<div class="form-group">							
 		<div class="col-md-6">
-		{!! Form::text('company',1) !!} 
+		{!! Form::hidden('company',Session::get('emp')) !!} 
 		</div>
 	</div>

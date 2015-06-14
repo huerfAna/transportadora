@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use Illuminate\Routing\Route;
 
 class RemissionRequest extends Request {
@@ -35,7 +36,7 @@ class RemissionRequest extends Request {
 			'date'      => 'required|date',
 			'customer'  => 'required|exists:customers,id',
 			'receiver'  => 'required|exists:receivers,id',
-			'driver' 	=> 'required|exists:drivers,id',
+			'driver' 	=> 'required|exists:employees,id',
 			'observation'  => 'max:400'
 		];
 	}

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Tow;
+use App\Company;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\TowRequest;
@@ -14,6 +15,7 @@ class TowController extends Controller {
 	 */
 	public function __construct()
 	{
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findTow', ['only' => ['edit','update']]);
 	}
 	public function findTow(Route $route)
@@ -31,13 +33,13 @@ class TowController extends Controller {
 	{
 		$remolques = Tow::search($requestp->get('buscar'))->paginate(10);
 		$remolques->setPath('remolque');
-		return view('mantenimiento.show_tows',compact('remolques'));
+		return view('mantenimiento.show_tows',compact('remolques'))->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
 		$remolque = '';
 		$form_data = ['route' => 'remolque.store', 'method' => 'POST', 'class'=>'form-horizontal'];
-		return view('mantenimiento.form_tow', compact('remolque','form_data'));
+		return view('mantenimiento.form_tow', compact('remolque','form_data'))->with('empresas',$this->empresas);
 	}	
 	public function store(TowRequest $request)
 	{
@@ -50,7 +52,7 @@ class TowController extends Controller {
 	{
 		$remolque = $this->remolque;
 		$form_data = ['route' => ['remolque.update',$id], 'method' => 'PUT', 'class'=>'form-horizontal'];
-		return view('mantenimiento.form_tow', compact('remolque','form_data'));
+		return view('mantenimiento.form_tow', compact('remolque','form_data'))->with('empresas',$this->empresas);
 	}
 	public function update(TowRequest $request, $id)
 	{		

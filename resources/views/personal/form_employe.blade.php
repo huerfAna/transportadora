@@ -6,20 +6,11 @@
 		<div class="col-md-10 col-md-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+					@include('errors.error')
 					{!! Form::model($empleado,$form_data) !!}				
 						<div class="form-group">							
 							<div class="col-md-5">
-								{!! Form::text('company',1) !!} 
+								{!! Form::hidden('company',Session::get('emp')) !!} 
 							</div>							
 						</div>
 						<div class="form-group">
@@ -81,7 +72,7 @@
 						<div class="form-group">
 							{!! Form::label('lbtipo','Tipo', ['class'=>'col-md-2 control-label']) !!} 
 							<div class="col-md-1">
-								{!! Form::select('type', config('options.types')) !!} 
+								{!! Form::select('type', config('options.types'),null,['id'=>'tipo']) !!} 
 							</div>												
 						</div>
 						<div class="form-group">
@@ -108,19 +99,19 @@
 								{!! Form::text('salary',null, ['class'=>'form-control','placeholder'=>'[Ingrese Sueldo]']) !!} 
 							</div>	
 						</div>	
-						<div class="form-group">
+						<div class="form-group div-chofer">
 							{!! Form::label('lblicencia','Licencia', ['class'=>'col-md-2 control-label']) !!}
 							<div class="col-md-2">
 							{!! Form::text('license', null, ['class'=>'form-control','placeholder'=>'[Licencia]']) !!} 
 							</div>		
 						</div>
-						<div class="form-group">
+						<div class="form-group div-chofer">
 							{!! Form::label('lbvig','Vigencia', ['class'=>'col-md-2 control-label']) !!}
 							<div class="col-md-2">
 							{!! Form::date('date_validate',null, ['class'=>'form-control','placeholder'=>'[Ingrese Vigencia]']) !!} 
 							</div>	
 						</div>
-						<div class="form-group">
+						<div class="form-group div-chofer">
 							{!! Form::label('lbunidad','Unidad', ['class'=>'col-md-2 control-label']) !!}
 							<div class="col-md-2">
 							{!! Form::select('unit',$unidad) !!}
@@ -144,4 +135,16 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+	   $(document).ready(function() {
+        $('#tipo').on('change', function() {
+        	if($(this).val() == 1)
+            	$('.div-chofer').css("display", "none");
+            else
+            	$('.div-chofer').css("display", "block");
+        });
+    });
+</script>
 @endsection

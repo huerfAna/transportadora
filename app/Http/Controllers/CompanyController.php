@@ -3,6 +3,7 @@
 use App\Company;
 use Illuminate\Routing\Route;
 use App\Http\Requests\CompanyRequest;
+use Session;
 
 class CompanyController extends Controller {
 
@@ -15,7 +16,7 @@ class CompanyController extends Controller {
 
 	public function __construct()
 	{
-		//$this->request = $request;
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findCompany', ['only' => ['edit','update']]);
 	}
 	public function findCompany(Route $route)
@@ -29,14 +30,14 @@ class CompanyController extends Controller {
 	 */
 	public function index()
 	{
-		$empresas = Company::all();
-		return view('personal.show_companies',compact('empresas'));
+		
+		return view('personal.show_companies')->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
 		$empresa = '';
 		$form_data = ['route' => 'empresa.store', 'method' => 'POST', 'class'=>'form-horizontal'];
-		return view('personal.form_company',compact('empresa','form_data'));
+		return view('personal.form_company',compact('empresa','form_data'))->with('empresas',$this->empresas);
 	}
 	public function store(CompanyRequest $request)
 	{
@@ -56,7 +57,7 @@ class CompanyController extends Controller {
 		$empresa = $this->empresa;
 		$form_data = ['route' => ['empresa.update', $empresa], 'method' => 'PUT', 'class'=>'form-horizontal'];
 		
-		return view('personal.form_company', compact('empresa','form_data'));
+		return view('personal.form_company', compact('empresa','form_data'))->with('empresas',$this->empresas);;
 	}
 	
 	public function update(CompanyRequest $request, $id)
@@ -71,5 +72,13 @@ class CompanyController extends Controller {
 	    }
 	
 		return \Redirect::route('empresa.index');
+	}
+	public function show($id)
+	{
+		Session::put('emp', $id);
+		$empresa = Company::find($id);		
+		Session::put('name_emp', $empresa->name);
+
+		return view('home')->with('empresas',$this->empresas);
 	}
 }

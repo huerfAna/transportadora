@@ -1,9 +1,10 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use Illuminate\Routing\Route;
 
-class TowRequest extends Request {
+class DetRemissionRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -31,21 +32,12 @@ class TowRequest extends Request {
 	{
 		//dd($this->);
 		return [
-			'plates'       => 'required|max:20|unique:tows,plates,'.$this->route->getParameter('remolque'),
-			'name'  	   => 'required|max:100',
+			'quantity'     => 'required|numeric',	
+			'unit'      => 'required',
 			'description'  => 'required',
-			'series'       => 'max:20',
-			'trademark'	   => 'max:100',
-			'model' 	   => 'max:100',
-			'type'         => 'max:20',
-			'policy'	   => 'max:10',
-			'asingle'      => 'required|integer',
-			'adouble'      => 'required|integer',
-			'weight'       => 'required',
-			'capacity'     => 'required',
-			'measure'	   => 'required'
-
-		];
+			'price'  => 'required|numeric',
+			'amount' 	=> 'required|numeric'
+			];
 	}
 
 }

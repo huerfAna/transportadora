@@ -9,7 +9,7 @@
 		 	<div class="form-group">
 		    {!! Form::select('tipo', config('options.types'),null) !!} 
 	    	</div>
-		    @include('administracion.partials.search');		   
+		    @include('administracion.partials.search')	   
 	    {!! Form::close() !!}			
 		<table class="table table-striped">
 			<thead>
@@ -27,7 +27,7 @@
 			<tbody>
 				@foreach($empleados as $emp)
 				<tr>
-					<td>{{$emp->code}}</td>
+					<td>{{$emp->rfc}}</td>
 					<td>{{$emp->name}}</td>
 					<td>{{$emp->address}}</td>
 					<td>{{$emp->cphone}}</td>

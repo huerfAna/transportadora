@@ -36,7 +36,6 @@ class ProviderRequest extends Request {
 			'address'  	 => 'required|max:250',
 			'number'     => 'max:4',
 			'colony'	 => 'max:250',
-			'city' 	     => 'max:5',
 			'pcode'      => 'numeric',
 			'email'		 => 'email',
 			'account'    => 'max:4',

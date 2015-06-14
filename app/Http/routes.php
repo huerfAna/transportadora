@@ -26,8 +26,9 @@ Route::controllers([
 	'auth'         => 'Auth\AuthController',
 	//'empresa'      => 'CompanyController',	
 ]);
+Route::get('exportar', 'UnitController@exportar');
+Route::post('remision/select', 'RemissionController@mostrar');
 
-Route::post('/remision/mostrar', 'RemissionController@mostrar');
 Route::resource('empresa','CompanyController');
 Route::resource('empleado','EmployeController');
 Route::resource('proveedor','ProviderController');
@@ -35,7 +36,10 @@ Route::resource('cliente','CustomerController');
 Route::resource('destinatario','ReceiverController');
 Route::resource('unidad','UnitController');
 Route::resource('remolque','TowController');
-Route::resource('remision','RemissionController',['only'=> ['index','create','store','edit','update']]);
+Route::resource('remision','RemissionController');
+Route::resource('detalle','DetRemissionController');
+Route::resource('ruta','RoadController');
+Route::resource('contrarecibo','PaymentController');
 
 
 /*

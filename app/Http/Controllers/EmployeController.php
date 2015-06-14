@@ -2,6 +2,7 @@
 
 use App\Employe;
 use App\Unit;
+use App\Company;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeRequest;
@@ -19,6 +20,7 @@ class EmployeController extends Controller {
 
 	public function __construct()
 	{
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findEmploye', ['only' => ['edit','update']]);
 	}
 	public function findEmploye(Route $route)
@@ -36,7 +38,7 @@ class EmployeController extends Controller {
 		$empleados = Employe::filterAndPaginate($requestp->get('buscar'),$requestp->get('tipo'));
 		$empleados->setPath('empleado');
 		
-		return view('personal.show_employees',compact('empleados'));
+		return view('personal.show_employees',compact('empleados'))->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
@@ -44,7 +46,7 @@ class EmployeController extends Controller {
 		$unidad = [0 => "Seleccione... "] + Unit::lists('unit_number','id');
 		$form_data = ['route' => 'empleado.store', 'method' => 'POST', 'class'=>'form-horizontal'];
 
-		return view('personal.form_employe', compact('empleado','form_data','unidad'));
+		return view('personal.form_employe', compact('empleado','form_data','unidad'))->with('empresas',$this->empresas);
 	}
 	public function store(EmployeRequest $request)
 	{
@@ -64,7 +66,7 @@ class EmployeController extends Controller {
 		$unidad = [0 => "Seleccione... "] + Unit::lists('unit_number','id');
 		$form_data = ['route' => ['empleado.update',$id], 'method' => 'PUT', 'class'=>'form-horizontal'];
 		
-		return view('personal.form_employe', compact('empleado','form_data','unidad'));
+		return view('personal.form_employe', compact('empleado','form_data','unidad'))->with('empresas',$this->empresas);
 	}
 	
 	public function update(EmployeRequest $request,$id)

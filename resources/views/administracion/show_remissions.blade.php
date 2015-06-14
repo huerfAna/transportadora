@@ -6,12 +6,12 @@
 	<a href="{{ route('remision.create') }}" class="btn btn-warning btn-fab btn-raised mdi-content-add material-button"></a> 
 	<div class="table-responsive">		
 		{!! Form::model(Request::all(), ['route' => 'remision.index','method'=>'GET','class'=>'navbar-form navbar-left','role'=>'search']) !!}
-		    @include('administracion.partials.search');
+		    @include('administracion.partials.search')
 		{!! Form::close() !!}					
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>FOLIO</th>
+					<th>#</th>
 					<th>FECHA</th>
 					<th>CLIENTE</th>
 					<th>ORIGEN</th>
@@ -24,7 +24,7 @@
 			<tbody>
 				@foreach($remisiones as $rem)
 				<tr>
-					<td>{{$rem->code}}</td>
+					<td>{{$rem->folio}}</td>
 					<td>{{$rem->date}}</td>
 					<td>{{$rem->customer}}</td>
 					<td>{{$rem->origin}}</td>

@@ -36,7 +36,7 @@ class Customer extends Model  {
 	public function scopeSearch($query, $name)
 	{
 		if(trim($name) != '')
-			$query->where("rfc","like","%$name%")->orwhere("rsocial","like","%$name%");
+			$query->where("rfc","like","%$name%")->orwhere("rsocial","like","%$name%")->where('company',Session::get('emp'))->paginate(10);
 	}
 
 }

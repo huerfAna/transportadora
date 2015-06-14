@@ -2,6 +2,8 @@
 
 use App\Receiver;
 use App\Customer;
+use App\Company;
+use Session;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReceiverRequest;
@@ -17,6 +19,7 @@ class ReceiverController extends Controller {
 
 	public function __construct()
 	{
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findReceiver', ['only' => ['edit','update']]);
 	}
 	public function findReceiver(Route $route)
@@ -34,14 +37,14 @@ class ReceiverController extends Controller {
 	{
 		$destinatarios = Receiver::search($requestp->get('buscar'))->paginate(10);
 		$destinatarios->setPath('destinatario');
-		return view('administracion.show_Receivers',compact('destinatarios'));
+		return view('administracion.show_Receivers',compact('destinatarios'))->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
 		$destinatario = '';
 		$cliente = ["" => "Seleccione... "] + Customer::lists('rsocial','id');
 		$form_data = ['route' => 'destinatario.store', 'method' => 'POST', 'class'=>'form-horizontal'];
-		return view('administracion.form_Receiver', compact('destinatario','form_data','cliente'));
+		return view('administracion.form_Receiver', compact('destinatario','form_data','cliente'))->with('empresas',$this->empresas);
 	}	
 	public function store(ReceiverRequest $request)
 	{
@@ -55,7 +58,7 @@ class ReceiverController extends Controller {
 		$destinatario = $this->destinatario;
 		$cliente = ["" => "Seleccione... "] + Customer::lists('rsocial','id');
 		$form_data = ['route' => ['destinatario.update',$id], 'method' => 'PUT', 'class'=>'form-horizontal'];
-		return view('administracion.form_Receiver', compact('destinatario','form_data','cliente'));
+		return view('administracion.form_Receiver', compact('destinatario','form_data','cliente'))->with('empresas',$this->empresas);
 	}
 	public function update(ReceiverRequest $request, $id)
 	{		

@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Company;
+use Session;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
@@ -15,6 +17,7 @@ class CustomerController extends Controller {
 
 	public function __construct()
 	{
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findCustomer', ['only' => ['edit','update']]);
 	}
 	public function findCustomer(Route $route)
@@ -29,15 +32,15 @@ class CustomerController extends Controller {
 	 */
 	public function index(Request $requestp)
 	{		
-		$clientes = Customer::search($requestp->get('buscar'))->paginate(10);
+		$clientes = Customer::search($requestp->get('buscar'));
 		$clientes->setPath('cliente');
-		return view('administracion.show_customers',compact('clientes'));
+		return view('administracion.show_customers',compact('clientes'))->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
 		$cliente = '';
 		$form_data = ['route' => 'cliente.store', 'method' => 'POST', 'class'=>'form-horizontal'];
-		return view('administracion.form_customer', compact('cliente','form_data'));
+		return view('administracion.form_customer', compact('cliente','form_data'))->with('empresas',$this->empresas);
 	}	
 	public function store(CustomerRequest $request)
 	{
@@ -50,7 +53,7 @@ class CustomerController extends Controller {
 	{
 		$cliente = $this->cliente;
 		$form_data = ['route' => ['cliente.update',$id], 'method' => 'PUT', 'class'=>'form-horizontal'];
-		return view('administracion.form_customer', compact('cliente','form_data'));
+		return view('administracion.form_customer', compact('cliente','form_data'))->with('empresas',$this->empresas);
 	}
 	public function update(CustomerRequest $request, $id)
 	{		

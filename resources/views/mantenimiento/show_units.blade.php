@@ -8,7 +8,7 @@
 		{!! Form::model(Request::all(),['route' => 'unidad.index','method'=>'GET','class'=>'navbar-form navbar-left','role'=>'search']) !!}
 		   @include('administracion.partials.search')
 		{!! Form::close() !!}	
-		<a href="{{ url('unidad/exportar') }}">Exportar</a>	
+		<a href="{{ url('exportar') }}">Exportar</a>	
 		<table class="table table-striped ">
 		 	<thead>
 				<tr>

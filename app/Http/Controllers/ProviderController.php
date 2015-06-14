@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Provider;
+use App\Company;
+use Session;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProviderRequest;
@@ -16,6 +18,7 @@ class ProviderController extends Controller {
 
 	public function __construct()
 	{
+		$this->empresas = Company::all();
 		$this->beforeFilter('@findProvider', ['only' => ['edit','update']]);
 	}
 	public function findProvider(Route $route)
@@ -33,13 +36,13 @@ class ProviderController extends Controller {
 	{
 		$proveedores = Provider::search($requestp->get('buscar'))->paginate(10);
 		$proveedores->setPath('proveedor');
-		return view('administracion.show_providers',compact('proveedores'));
+		return view('administracion.show_providers',compact('proveedores'))->with('empresas',$this->empresas);
 	}
 	public function create()
 	{
 		$proveedor = '';
 		$form_data = ['route' => 'proveedor.store', 'method' => 'POST', 'class'=>'form-horizontal'];
-		return view('administracion.form_provider', compact('proveedor','form_data'));
+		return view('administracion.form_provider', compact('proveedor','form_data'))->with('empresas',$this->empresas);
 	}	
 	public function store(ProviderRequest $request)
 	{
@@ -52,7 +55,7 @@ class ProviderController extends Controller {
 	{
 		$proveedor = $this->proveedor;
 		$form_data = ['route' => ['proveedor.update',$id], 'method' => 'PUT', 'class'=>'form-horizontal'];
-		return view('administracion.form_provider', compact('proveedor','form_data'));
+		return view('administracion.form_provider', compact('proveedor','form_data'))->with('empresas',$this->empresas);
 	}
 	public function update(ProviderRequest $request, $id)
 	{		

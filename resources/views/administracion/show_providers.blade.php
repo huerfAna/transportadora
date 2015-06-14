@@ -6,7 +6,7 @@
 	<a href="{{ route('proveedor.create') }}" class="btn btn-warning btn-fab btn-raised mdi-content-add material-button"></a> 
 	<div class="table-responsive">		
 		{!! Form::model(Request::all(), ['route' => 'proveedor.index','method'=>'GET','class'=>'navbar-form navbar-left','role'=>'search']) !!}
-		    @include('administracion.partials.search');
+		    @include('administracion.partials.search')
 		{!! Form::close() !!}					
 		<table class="table table-striped">
 			<thead>

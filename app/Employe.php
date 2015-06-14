@@ -1,7 +1,7 @@
 <?php namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Session;
 /** 
    ******************
    * Modelo Empleado
@@ -17,7 +17,7 @@ class Employe extends Model  {
 	 */
 	protected $table = 'employees';
 
-
+	
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -27,13 +27,13 @@ class Employe extends Model  {
 
 	public static function filterAndPaginate($name, $type)
 	{
-		return Employe::search($name)->type($type)->paginate(10);
+		return Employe::search($name)->type($type)->where('company',Session::get('emp'))->paginate(10);
 	}
 	public function scopeSearch($query, $name)
 	{
 
 		if(trim($name) != '')
-			$query->where("name","like","%$name%")->orwhere("rfc","like","%$name%");
+			$query->where("name","like","%$name%")->where("rfc","like","%$name%");
 
 	}
 	public function scopeType($query, $type)

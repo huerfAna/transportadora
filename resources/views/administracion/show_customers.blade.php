@@ -7,7 +7,7 @@
 	
 	<div class="table-responsive">	
 		{!! Form::model(Request::all(), ['route' => 'cliente.index','method'=>'GET','class'=>'navbar-form navbar-left','role'=>'search']) !!}
-		   @include('administracion.partials.search');
+		   @include('administracion.partials.search')
 		{!! Form::close() !!}			
 		 <table class="table table-striped">
 			<thead>
@@ -28,7 +28,7 @@
 					<td>{{$cli->short_calle}}</td>
 					<td>{{$cli->phone}}</td>
 					<td>{{$cli->email}}</td>
-					<td><a href="{{ route('cliente.create') }}">Editar</a></td>
+					<td><a href="{{ route('cliente.edit',$cli)  }}">Editar</a></td>
 				</tr>
 				@endforeach	
 			</tbody>

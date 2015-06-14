@@ -3,11 +3,11 @@
 use Illuminate\Database\Eloquent\Model;
 
 /** 
-   ******************
-   * Modelo Remolque
-   ******************
+   **********************
+   * Modelo Destinatario
+   **********************
  **/
-class Tow extends Model  {
+class Payment extends Model  {
 
 	
 	/**
@@ -15,22 +15,19 @@ class Tow extends Model  {
 	 *
 	 * @var string
 	 */
-	protected $table = 'tows';
-	public $timestamps = false;
+	protected $table = 'payments';
+
 
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
-
-	protected  $guarded = ['id'];
-
+	protected  $guarded = ['id','created_at','updated_at'];
+	
 	public function scopeSearch($query, $name)
 	{
 		if(trim($name) != '')
-			$query->where("name","like","%$name%")->orwhere("plates","like","%$name%");
+			$query->where("code","like","%$name%");
 	}
-
-
 }
